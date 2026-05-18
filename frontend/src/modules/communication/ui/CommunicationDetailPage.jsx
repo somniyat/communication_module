@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import { Tag } from 'primereact/tag';
 import { Message } from 'primereact/message';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { fetchCommunication } from '../slice/communication.thunks';
@@ -29,7 +30,12 @@ export default function CommunicationDetailPage() {
       <Card title={`comID: ${selected.comID}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Info label="Type"><TypeIcon type={selected.type} /></Info>
-          <Info label="Status"><StatusTag value={selected.status} /></Info>
+          <Info label="Status">
+            <div className="flex gap-2 items-center flex-wrap">
+              <StatusTag value={selected.status} />
+              {selected.dryRun && <Tag value="Dry run" severity="warning" icon="pi pi-exclamation-triangle" />}
+            </div>
+          </Info>
           <Info label="Subject">{selected.subject || '—'}</Info>
           <Info label="Recipient">{selected.email || selected.phoneNumber || selected.fcmToken || '—'}</Info>
           <Info label="Attempts">{selected.attempts}</Info>
@@ -55,6 +61,15 @@ export default function CommunicationDetailPage() {
         {selected.error && (
           <div className="mt-6">
             <Message severity="error" text={selected.error} />
+          </div>
+        )}
+
+        {selected.dryRun && (
+          <div className="mt-3">
+            <Message
+              severity="warn"
+              text="Dry run: the channel returned success but no real transport was configured (SMTP / Twilio / Firebase). Nothing was actually sent."
+            />
           </div>
         )}
       </Card>

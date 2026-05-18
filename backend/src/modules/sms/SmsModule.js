@@ -33,7 +33,7 @@ class SmsModule extends BaseModule {
       const client = this.getClient();
       if (!client) {
         logger.info(`SmsModule(dry-run): to=${to} from=${from} message="${communication.message}"`);
-        return this.ok();
+        return this.ok({ dryRun: true });
       }
 
       const res = await client.messages.create({ to, from, body: communication.message });

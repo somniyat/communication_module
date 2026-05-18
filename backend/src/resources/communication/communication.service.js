@@ -1,6 +1,23 @@
 const Communication = require('./communication.model');
 const { notFound, badRequest } = require('../../utils/errors');
 
+// Map known alias fields (from client fetch APIs) to our schema.
+function normalizeIncoming(raw) {
+  if (!raw || typeof raw !== 'object') return raw;
+  const out = { ...raw };
+  if (!out.fcmToken && (raw.fcmtoken || raw.token)) {
+    out.fcmToken = raw.fcmtoken || raw.token;
+  }
+  if (!out.phoneNumber && (raw.phone || raw.phonenumber)) {
+    out.phoneNumber = raw.phone || raw.phonenumber;
+  }
+  delete out.fcmtoken;
+  delete out.token;
+  delete out.phone;
+  delete out.phonenumber;
+  return out;
+}
+
 class CommunicationService {
   async addMany(customerId, items) {
     if (!Array.isArray(items)) throw badRequest('items must be an array');
@@ -13,7 +30,8 @@ class CommunicationService {
    */
   async upsertMany(customerId, items) {
     const results = [];
-    for (const raw of items) {
+    for (const item of items) {
+      const raw = normalizeIncoming(item);
       if (!raw || !raw.comID) continue;
       const { comID, id: _ignoreId, _id: _ignoreUnderId, ...rest } = raw;
       const update = { $set: { ...rest, customerId }, $setOnInsert: { comID } };
@@ -59,10 +77,10 @@ class CommunicationService {
     return Communication.find({ customerId, status: 'pending' }).limit(limit);
   }
 
-  async markSent(id) {
+  async markSent(id, { dryRun = false } = {}) {
     return Communication.findOneAndUpdate(
       { id },
-      { $set: { status: 'sent', error: '', sentAt: new Date() }, $inc: { attempts: 1 } },
+      { $set: { status: 'sent', error: '', sentAt: new Date(), dryRun: !!dryRun }, $inc: { attempts: 1 } },
       { new: true }
     );
   }

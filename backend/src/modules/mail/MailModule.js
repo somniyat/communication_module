@@ -55,8 +55,9 @@ class MailModule extends BaseModule {
         ),
       });
 
-      logger.debug(`MailModule: sent to=${to.join(',')} id=${info.messageId || 'n/a'}`);
-      return this.ok();
+      const dryRun = !config.smtp.host;
+      logger.debug(`MailModule${dryRun ? '(dry-run)' : ''}: sent to=${to.join(',')} id=${info.messageId || 'n/a'}`);
+      return this.ok({ dryRun });
     } catch (err) {
       return this.fail(err);
     }

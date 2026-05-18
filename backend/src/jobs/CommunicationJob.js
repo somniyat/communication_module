@@ -39,7 +39,7 @@ class CommunicationJob {
       const result = await this.dispatcher.dispatch(comm, customer);
       let saved;
       if (result.success) {
-        saved = await this.commService.markSent(comm.id);
+        saved = await this.commService.markSent(comm.id, { dryRun: !!result.dryRun });
         dispatched += 1;
       } else {
         saved = await this.commService.markFailed(comm.id, result.error);

@@ -4,6 +4,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+import { Tag } from 'primereact/tag';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
@@ -137,7 +138,14 @@ export default function CommunicationListPage() {
         <Column field="comID" header="comID" />
         <Column header="Customer" body={(r) => customerName(r.customerId)} />
         <Column header="Type" body={(r) => <TypeIcon type={r.type} />} />
-        <Column header="Status" body={(r) => <StatusTag value={r.status} />} />
+        <Column header="Status" body={(r) => (
+          <div className="flex gap-1 items-center flex-wrap">
+            <StatusTag value={r.status} />
+            {r.dryRun && (
+              <Tag value="Dry run" severity="warning" icon="pi pi-exclamation-triangle" />
+            )}
+          </div>
+        )} />
         <Column header="Recipient" body={(r) => r.email || r.phoneNumber || r.fcmToken || '—'} />
         <Column header="Sent at" body={(r) => formatDate(r.sentAt)} />
         <Column header="Created" body={(r) => formatDate(r.createdAt)} />

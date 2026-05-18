@@ -8,8 +8,8 @@ class BaseModule {
     throw new Error(`${this.name}.send not implemented`);
   }
 
-  ok() {
-    return { success: true };
+  ok(meta = {}) {
+    return { success: true, ...meta };
   }
 
   fail(error) {
