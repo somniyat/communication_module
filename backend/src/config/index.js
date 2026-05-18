@@ -27,6 +27,7 @@ const config = {
     secure: toBool(process.env.SMTP_SECURE, false),
     user: process.env.SMTP_USER || '',
     pass: process.env.SMTP_PASS || '',
+    rejectUnauthorized: toBool(process.env.SMTP_REJECT_UNAUTHORIZED, true),
   },
 
   twilio: {
