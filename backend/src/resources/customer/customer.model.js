@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
+const { prefixedId } = require('../../utils/ids');
 
 const apiEndpointSchema = new mongoose.Schema(
   {
@@ -12,6 +13,7 @@ const apiEndpointSchema = new mongoose.Schema(
 
 const customerSchema = new mongoose.Schema(
   {
+    id: { type: String, required: true, unique: true, index: true, default: () => prefixedId('cus') },
     name: { type: String, required: true, trim: true, unique: true },
     apiKey: { type: String, required: true, unique: true, index: true },
 
@@ -24,12 +26,12 @@ const customerSchema = new mongoose.Schema(
     communicationFetchApi: { type: apiEndpointSchema, default: () => ({}) },
     communicationUpdateApi: { type: apiEndpointSchema, default: () => ({}) },
 
-    jobIntervalMs: { type: Number, default: null }, // null = use global default
+    jobIntervalMs: { type: Number, default: null },
     active: { type: Boolean, default: true },
 
     notes: { type: String, default: '' },
   },
-  { timestamps: true }
+  { timestamps: true, id: false }
 );
 
 customerSchema.pre('validate', function preValidate(next) {
@@ -39,9 +41,7 @@ customerSchema.pre('validate', function preValidate(next) {
 
 customerSchema.methods.toJSON = function toJSON() {
   const obj = this.toObject({ versionKey: false });
-  obj.id = obj._id;
   delete obj._id;
-  // hide firebase credentials in API responses (keep only a flag)
   obj.hasFirebaseKey = !!obj.firebaseKey;
   delete obj.firebaseKey;
   return obj;

@@ -6,7 +6,7 @@ const { unauthorized } = require('../../utils/errors');
 class AuthService {
   signToken(user) {
     return jwt.sign(
-      { sub: String(user._id), email: user.email, role: user.role },
+      { sub: user.id, email: user.email, role: user.role },
       config.jwt.secret,
       { expiresIn: config.jwt.expiresIn }
     );

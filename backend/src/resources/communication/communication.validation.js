@@ -18,14 +18,14 @@ const communicationBase = {
 
 const addMany = {
   body: Joi.object({
-    customerId: Joi.string().hex().length(24).required(),
+    customerId: Joi.string().required(),
     items: Joi.array().items(Joi.object(communicationBase)).min(1).required(),
   }),
 };
 
 const listCommunications = {
   query: Joi.object({
-    customerId: Joi.string().hex().length(24),
+    customerId: Joi.string(),
     status: Joi.string().valid(...STATUSES),
     type: Joi.string().valid(...TYPES),
     comID: Joi.string(),
@@ -35,11 +35,24 @@ const listCommunications = {
 };
 
 const idParam = {
-  params: Joi.object({ id: Joi.string().hex().length(24).required() }),
+  params: Joi.object({ id: Joi.string().required() }),
 };
 
 const statsQuery = {
-  query: Joi.object({ customerId: Joi.string().hex().length(24) }),
+  query: Joi.object({ customerId: Joi.string() }),
 };
 
-module.exports = { addMany, listCommunications, idParam, statsQuery };
+const bulkDelete = {
+  body: Joi.object({
+    ids: Joi.array().items(Joi.string()).default([]),
+    all: Joi.boolean().default(false),
+    filter: Joi.object({
+      customerId: Joi.string(),
+      status: Joi.string().valid(...STATUSES),
+      type: Joi.string().valid(...TYPES),
+      comID: Joi.string(),
+    }).default({}),
+  }).or('ids', 'all'),
+};
+
+module.exports = { addMany, listCommunications, idParam, statsQuery, bulkDelete };

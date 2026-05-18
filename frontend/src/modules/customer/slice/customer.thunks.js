@@ -16,3 +16,11 @@ export const fetchCustomer  = wrap('get', (id) => customerApi.get(id));
 export const createCustomer = wrap('create', (body) => customerApi.create(body));
 export const updateCustomer = wrap('update', ({ id, body }) => customerApi.update(id, body));
 export const deleteCustomer = wrap('remove', (id) => customerApi.remove(id).then(() => id));
+export const bulkDeleteCustomers = wrap('bulkDelete', async (ids) => {
+  await customerApi.bulkDelete({ ids });
+  return ids;
+});
+export const clearAllCustomers = wrap('clearAll', async () => {
+  await customerApi.bulkDelete({ all: true });
+  return true;
+});

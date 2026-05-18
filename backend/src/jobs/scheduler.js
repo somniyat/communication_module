@@ -31,7 +31,7 @@ class Scheduler {
 
   async refresh() {
     const customers = await customerService.listActiveRaw();
-    const activeIds = new Set(customers.map((c) => String(c._id)));
+    const activeIds = new Set(customers.map((c) => c.id));
 
     // Remove timers for customers that disappeared or went inactive
     for (const [id, entry] of this.timers) {
@@ -44,7 +44,7 @@ class Scheduler {
 
     // Add or update timers
     for (const customer of customers) {
-      const id = String(customer._id);
+      const id = customer.id;
       const intervalMs = customer.jobIntervalMs || config.job.intervalMs;
       const existing = this.timers.get(id);
       if (existing && existing.interval === intervalMs) continue;
@@ -53,7 +53,7 @@ class Scheduler {
       const entry = { interval: intervalMs, running: false, timer: null };
       entry.timer = setInterval(() => this.tick(id, entry), intervalMs);
       this.timers.set(id, entry);
-      logger.info(`Scheduler: customer=${customer.name} interval=${intervalMs}ms`);
+      logger.info(`Scheduler: customer=${customer.name} (${id}) interval=${intervalMs}ms`);
     }
   }
 
