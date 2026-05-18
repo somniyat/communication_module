@@ -47,4 +47,11 @@ const listCustomers = {
   query: Joi.object({ active: Joi.boolean() }),
 };
 
-module.exports = { createCustomer, updateCustomer, idParam, listCustomers };
+const bulkDelete = {
+  body: Joi.object({
+    ids: Joi.array().items(Joi.string()).default([]),
+    all: Joi.boolean().default(false),
+  }).or('ids', 'all'),
+};
+
+module.exports = { createCustomer, updateCustomer, idParam, listCustomers, bulkDelete };

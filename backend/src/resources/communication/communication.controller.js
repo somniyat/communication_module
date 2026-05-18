@@ -25,4 +25,17 @@ const stats = asyncHandler(async (req, res) => {
   res.json({ data });
 });
 
-module.exports = { list, getOne, addMany, stats };
+const remove = asyncHandler(async (req, res) => {
+  await communicationService.remove(req.params.id);
+  res.status(204).end();
+});
+
+const bulkDelete = asyncHandler(async (req, res) => {
+  const { ids, all, filter } = req.body;
+  const result = all
+    ? await communicationService.removeByFilter(filter || {})
+    : await communicationService.removeMany(ids);
+  res.json({ data: result });
+});
+
+module.exports = { list, getOne, addMany, stats, remove, bulkDelete };

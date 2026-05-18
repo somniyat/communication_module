@@ -26,4 +26,10 @@ const remove = asyncHandler(async (req, res) => {
   res.status(204).end();
 });
 
-module.exports = { list, getOne, create, update, remove };
+const bulkDelete = asyncHandler(async (req, res) => {
+  const { ids, all } = req.body;
+  const result = all ? await customerService.removeAll() : await customerService.removeMany(ids);
+  res.json({ data: result });
+});
+
+module.exports = { list, getOne, create, update, remove, bulkDelete };

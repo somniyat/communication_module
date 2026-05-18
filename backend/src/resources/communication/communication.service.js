@@ -79,6 +79,29 @@ class CommunicationService {
     return Communication.findOneAndUpdate({ id }, { $set: { updateAckAt: new Date() } }, { new: true });
   }
 
+  async remove(id) {
+    const removed = await Communication.findOneAndDelete({ id });
+    if (!removed) throw notFound('Communication not found');
+    return removed;
+  }
+
+  async removeMany(ids) {
+    if (!Array.isArray(ids) || !ids.length) return { deletedCount: 0 };
+    const res = await Communication.deleteMany({ id: { $in: ids } });
+    return { deletedCount: res.deletedCount || 0 };
+  }
+
+  // Deletes all communications matching the provided filter (same shape as list()).
+  async removeByFilter({ customerId, status, type, comID } = {}) {
+    const query = {};
+    if (customerId) query.customerId = customerId;
+    if (status) query.status = status;
+    if (type) query.type = type;
+    if (comID) query.comID = comID;
+    const res = await Communication.deleteMany(query);
+    return { deletedCount: res.deletedCount || 0 };
+  }
+
   async stats({ customerId } = {}) {
     const match = customerId ? { customerId } : {};
     const pipeline = [

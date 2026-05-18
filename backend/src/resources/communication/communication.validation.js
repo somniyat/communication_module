@@ -42,4 +42,17 @@ const statsQuery = {
   query: Joi.object({ customerId: Joi.string() }),
 };
 
-module.exports = { addMany, listCommunications, idParam, statsQuery };
+const bulkDelete = {
+  body: Joi.object({
+    ids: Joi.array().items(Joi.string()).default([]),
+    all: Joi.boolean().default(false),
+    filter: Joi.object({
+      customerId: Joi.string(),
+      status: Joi.string().valid(...STATUSES),
+      type: Joi.string().valid(...TYPES),
+      comID: Joi.string(),
+    }).default({}),
+  }).or('ids', 'all'),
+};
+
+module.exports = { addMany, listCommunications, idParam, statsQuery, bulkDelete };

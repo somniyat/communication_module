@@ -10,6 +10,7 @@ router.use(authRequired, requireRole('admin'));
 
 router.get('/', validate(validation.listCustomers), controller.list);
 router.post('/', validate(validation.createCustomer), controller.create);
+router.post('/bulk-delete', validate(validation.bulkDelete), controller.bulkDelete);
 router.get('/:id', validate(validation.idParam), controller.getOne);
 router.put('/:id', validate(validation.updateCustomer), controller.update);
 router.delete('/:id', validate(validation.idParam), controller.remove);

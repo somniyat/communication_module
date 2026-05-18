@@ -18,6 +18,17 @@ class CustomerService {
     return removed;
   }
 
+  async removeMany(ids) {
+    if (!Array.isArray(ids) || !ids.length) return { deletedCount: 0 };
+    const res = await Customer.deleteMany({ id: { $in: ids } });
+    return { deletedCount: res.deletedCount || 0 };
+  }
+
+  async removeAll() {
+    const res = await Customer.deleteMany({});
+    return { deletedCount: res.deletedCount || 0 };
+  }
+
   async findById(id) {
     const customer = await Customer.findOne({ id });
     if (!customer) throw notFound('Customer not found');

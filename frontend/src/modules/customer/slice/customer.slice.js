@@ -5,6 +5,8 @@ import {
   createCustomer,
   updateCustomer,
   deleteCustomer,
+  bulkDeleteCustomers,
+  clearAllCustomers,
 } from './customer.thunks';
 
 const initialState = {
@@ -43,6 +45,15 @@ const customerSlice = createSlice({
 
       .addCase(deleteCustomer.fulfilled, (s, a) => {
         s.items = s.items.filter((c) => c.id !== a.payload);
+      })
+
+      .addCase(bulkDeleteCustomers.fulfilled, (s, a) => {
+        const removed = new Set(a.payload);
+        s.items = s.items.filter((c) => !removed.has(c.id));
+      })
+
+      .addCase(clearAllCustomers.fulfilled, (s) => {
+        s.items = [];
       });
   },
 });

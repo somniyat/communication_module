@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCommunications, fetchCommunication } from './communication.thunks';
+import {
+  fetchCommunications,
+  fetchCommunication,
+  deleteCommunication,
+  bulkDeleteCommunications,
+  clearAllCommunications,
+} from './communication.thunks';
 
 const initialState = {
   items: [],
@@ -34,7 +40,25 @@ const communicationSlice = createSlice({
       })
       .addCase(fetchCommunications.rejected, (s, a) => { s.status = 'failed'; s.error = a.payload; })
 
-      .addCase(fetchCommunication.fulfilled, (s, a) => { s.selected = a.payload; });
+      .addCase(fetchCommunication.fulfilled, (s, a) => { s.selected = a.payload; })
+
+      .addCase(deleteCommunication.fulfilled, (s, a) => {
+        s.items = s.items.filter((c) => c.id !== a.payload);
+        s.meta.total = Math.max(0, s.meta.total - 1);
+      })
+
+      .addCase(bulkDeleteCommunications.fulfilled, (s, a) => {
+        const removed = new Set(a.payload);
+        const before = s.items.length;
+        s.items = s.items.filter((c) => !removed.has(c.id));
+        s.meta.total = Math.max(0, s.meta.total - (before - s.items.length));
+      })
+
+      .addCase(clearAllCommunications.fulfilled, (s, a) => {
+        const deleted = a.payload?.deletedCount || 0;
+        s.items = [];
+        s.meta.total = Math.max(0, s.meta.total - deleted);
+      });
   },
 });
 
