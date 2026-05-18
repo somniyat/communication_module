@@ -21,7 +21,11 @@ class MailModule extends BaseModule {
       port: config.smtp.port,
       secure: config.smtp.secure,
       auth: config.smtp.user ? { user: config.smtp.user, pass: config.smtp.pass } : undefined,
+      tls: { rejectUnauthorized: config.smtp.rejectUnauthorized },
     });
+    if (!config.smtp.rejectUnauthorized) {
+      logger.warn('MailModule: TLS certificate validation is DISABLED (SMTP_REJECT_UNAUTHORIZED=false)');
+    }
     return this.transporter;
   }
 
