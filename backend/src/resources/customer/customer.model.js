@@ -23,6 +23,10 @@ const customerSchema = new mongoose.Schema(
     whatsappSenderPhone: { type: String, trim: true, default: '' },
     smsSenderId: { type: String, trim: true, default: '' },
 
+    // Default for push notifications: send data-only messages (no notification block)
+    // when the per-communication field is not set.
+    withoutNotificationBody: { type: Boolean, default: false },
+
     communicationFetchApi: { type: apiEndpointSchema, default: () => ({}) },
     communicationUpdateApi: { type: apiEndpointSchema, default: () => ({}) },
 

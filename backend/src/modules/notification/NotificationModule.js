@@ -84,7 +84,13 @@ class NotificationModule extends BaseModule {
 
       const message = { token };
 
-      if (communication.withoutNotificationBody) {
+      // Per-communication value (true/false) overrides the customer default.
+      // Null/undefined means "inherit from customer config".
+      const withoutBody = communication.withoutNotificationBody != null
+        ? communication.withoutNotificationBody
+        : !!(customer && customer.withoutNotificationBody);
+
+      if (withoutBody) {
         // Data-only message: forward the original fetched payload.
         const payload = communication.rawPayload && Object.keys(communication.rawPayload).length
           ? communication.rawPayload
@@ -107,7 +113,7 @@ class NotificationModule extends BaseModule {
       }
 
       const res = await messaging.send(message);
-      logger.debug(`NotificationModule: sent id=${res} mode=${communication.withoutNotificationBody ? 'data-only' : 'notification'}`);
+      logger.debug(`NotificationModule: sent id=${res} mode=${withoutBody ? 'data-only' : 'notification'}`);
       return this.ok();
     } catch (err) {
       return this.fail(err);

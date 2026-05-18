@@ -19,6 +19,7 @@ const blank = {
   whatsappSenderPhone: '',
   smsSenderId: '',
   firebaseKey: '',
+  withoutNotificationBody: false,
   communicationFetchApi: { ...emptyEndpoint },
   communicationUpdateApi: { ...emptyEndpoint, method: 'POST' },
   jobIntervalMs: null,
@@ -122,6 +123,17 @@ export default function CustomerConfigForm({ initial, onSubmit, submitting, onCa
             {initial?.hasFirebaseKey && !firebaseKeyText && (
               <small className="text-gray-500">A key is currently stored. Paste a new one to replace it.</small>
             )}
+          </Field>
+          <Field label="Default: send push as data-only (without notification body)" className="md:col-span-2">
+            <div className="flex items-center gap-3">
+              <InputSwitch
+                checked={!!form.withoutNotificationBody}
+                onChange={(e) => set('withoutNotificationBody', e.value)}
+              />
+              <small className="text-gray-500">
+                Applied when a communication does not set <code>without_notification_body</code> itself.
+              </small>
+            </div>
           </Field>
         </div>
       </Panel>

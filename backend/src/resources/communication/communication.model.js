@@ -23,7 +23,8 @@ const communicationSchema = new mongoose.Schema(
     data: { type: mongoose.Schema.Types.Mixed, default: {} },
     rawPayload: { type: mongoose.Schema.Types.Mixed, default: {} },
 
-    withoutNotificationBody: { type: Boolean, default: false },
+    // null = inherit from customer config, true/false = explicit per-communication override
+    withoutNotificationBody: { type: Boolean, default: null },
 
     status: { type: String, enum: STATUSES, default: 'pending', index: true },
     error: { type: String, default: '' },
