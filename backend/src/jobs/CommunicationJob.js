@@ -76,10 +76,9 @@ class CommunicationJob {
         method: api.method || 'POST',
         headers: api.headers || {},
         data: {
-          comID: communication.comID,
+          id: communication.comID,
           isSent: result.success ? 1 : 0,
           error: result.success ? '' : (result.error || ''),
-          sentAt: communication.sentAt,
         },
       });
       await this.commService.markUpdateAck(communication._id);
