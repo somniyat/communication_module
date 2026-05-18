@@ -21,6 +21,9 @@ const communicationSchema = new mongoose.Schema(
 
     files: { type: [String], default: [] },
     data: { type: mongoose.Schema.Types.Mixed, default: {} },
+    rawPayload: { type: mongoose.Schema.Types.Mixed, default: {} },
+
+    withoutNotificationBody: { type: Boolean, default: false },
 
     status: { type: String, enum: STATUSES, default: 'pending', index: true },
     error: { type: String, default: '' },

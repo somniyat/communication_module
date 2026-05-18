@@ -81,17 +81,33 @@ class NotificationModule extends BaseModule {
       // eslint-disable-next-line global-require
       const admin = require('firebase-admin');
       const messaging = admin.messaging(app);
-      const res = await messaging.send({
-        token,
-        notification: {
+
+      const message = { token };
+
+      if (communication.withoutNotificationBody) {
+        // Data-only message: forward the original fetched payload.
+        const payload = communication.rawPayload && Object.keys(communication.rawPayload).length
+          ? communication.rawPayload
+          : (communication.toObject ? communication.toObject() : communication);
+        message.data = { data: JSON.stringify(payload) };
+        // Without a notification block, Android needs an explicit high priority
+        // for the data message to wake the app reliably in the background.
+        message.android = { priority: 'high' };
+        message.apns = { headers: { 'apns-priority': '10' }, payload: { aps: { 'content-available': 1 } } };
+      } else {
+        message.notification = {
           title: communication.subject || 'Notification',
           body: communication.message,
-        },
-        data: communication.data && typeof communication.data === 'object'
-          ? Object.fromEntries(Object.entries(communication.data).map(([k, v]) => [k, String(v)]))
-          : undefined,
-      });
-      logger.debug(`NotificationModule: sent id=${res}`);
+        };
+        if (communication.data && typeof communication.data === 'object' && Object.keys(communication.data).length) {
+          message.data = Object.fromEntries(
+            Object.entries(communication.data).map(([k, v]) => [k, String(v)])
+          );
+        }
+      }
+
+      const res = await messaging.send(message);
+      logger.debug(`NotificationModule: sent id=${res} mode=${communication.withoutNotificationBody ? 'data-only' : 'notification'}`);
       return this.ok();
     } catch (err) {
       return this.fail(err);
