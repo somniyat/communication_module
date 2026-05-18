@@ -1,6 +1,13 @@
 const Communication = require('./communication.model');
 const { notFound, badRequest } = require('../../utils/errors');
 
+const isTruthy = (v) => {
+  if (typeof v === 'boolean') return v;
+  if (typeof v === 'number') return v === 1;
+  if (typeof v === 'string') return ['1', 'true', 'yes', 'on'].includes(v.toLowerCase());
+  return false;
+};
+
 // Map known alias fields (from client fetch APIs) to our schema.
 function normalizeIncoming(raw) {
   if (!raw || typeof raw !== 'object') return raw;
@@ -11,10 +18,16 @@ function normalizeIncoming(raw) {
   if (!out.phoneNumber && (raw.phone || raw.phonenumber)) {
     out.phoneNumber = raw.phone || raw.phonenumber;
   }
+  if (raw.without_notification_body !== undefined || raw.withoutNotificationBody !== undefined) {
+    out.withoutNotificationBody = isTruthy(
+      raw.withoutNotificationBody !== undefined ? raw.withoutNotificationBody : raw.without_notification_body
+    );
+  }
   delete out.fcmtoken;
   delete out.token;
   delete out.phone;
   delete out.phonenumber;
+  delete out.without_notification_body;
   return out;
 }
 
@@ -34,6 +47,8 @@ class CommunicationService {
       const raw = normalizeIncoming(item);
       if (!raw || !raw.comID) continue;
       const { comID, id: _ignoreId, _id: _ignoreUnderId, ...rest } = raw;
+      // Preserve the original fetched object so downstream channels can forward it.
+      rest.rawPayload = item;
       const update = { $set: { ...rest, customerId }, $setOnInsert: { comID } };
       if (rest.status === undefined) {
         update.$setOnInsert.status = 'pending';
