@@ -7,19 +7,19 @@ class CustomerService {
   }
 
   async update(id, patch) {
-    const updated = await Customer.findByIdAndUpdate(id, patch, { new: true, runValidators: true });
+    const updated = await Customer.findOneAndUpdate({ id }, patch, { new: true, runValidators: true });
     if (!updated) throw notFound('Customer not found');
     return updated;
   }
 
   async remove(id) {
-    const removed = await Customer.findByIdAndDelete(id);
+    const removed = await Customer.findOneAndDelete({ id });
     if (!removed) throw notFound('Customer not found');
     return removed;
   }
 
   async findById(id) {
-    const customer = await Customer.findById(id);
+    const customer = await Customer.findOne({ id });
     if (!customer) throw notFound('Customer not found');
     return customer;
   }
@@ -40,7 +40,7 @@ class CustomerService {
   }
 
   async findByIdRaw(id) {
-    return Customer.findById(id).lean();
+    return Customer.findOne({ id }).lean();
   }
 }
 

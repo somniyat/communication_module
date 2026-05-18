@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const { COMMUNICATION_TYPES } = require('../../dispatcher/DispatcherService');
+const { prefixedId } = require('../../utils/ids');
 
 const STATUSES = ['pending', 'sent', 'notsent'];
 
 const communicationSchema = new mongoose.Schema(
   {
+    id: { type: String, required: true, unique: true, index: true, default: () => prefixedId('com') },
     comID: { type: String, required: true, trim: true, index: true },
-    customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true, index: true },
+    customerId: { type: String, required: true, index: true }, // references Customer.id (readable)
 
     type: { type: String, enum: COMMUNICATION_TYPES, required: true },
     subject: { type: String, default: '' },
@@ -27,7 +29,7 @@ const communicationSchema = new mongoose.Schema(
     sentAt: { type: Date, default: null },
     updateAckAt: { type: Date, default: null },
   },
-  { timestamps: true }
+  { timestamps: true, id: false }
 );
 
 communicationSchema.index({ customerId: 1, comID: 1 }, { unique: true });
@@ -35,7 +37,6 @@ communicationSchema.index({ status: 1, type: 1 });
 
 communicationSchema.methods.toJSON = function toJSON() {
   const obj = this.toObject({ versionKey: false });
-  obj.id = obj._id;
   delete obj._id;
   return obj;
 };

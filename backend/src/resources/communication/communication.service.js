@@ -8,25 +8,23 @@ class CommunicationService {
   }
 
   /**
-   * Upsert by (customerId, comID). Returns the array of saved documents
-   * along with which ones were newly inserted (so the job knows what to dispatch).
+   * Upsert by (customerId, comID). customerId is the customer's readable id
+   * (e.g. "cus_abc..."). Returns each saved document plus whether it was newly inserted.
    */
   async upsertMany(customerId, items) {
     const results = [];
     for (const raw of items) {
       if (!raw || !raw.comID) continue;
-      const { comID, ...rest } = raw;
-      const update = { $set: { ...rest, customerId }, $setOnInsert: { comID, status: 'pending' } };
-      // Remove status from $set on inserts unless caller explicitly set it
+      const { comID, id: _ignoreId, _id: _ignoreUnderId, ...rest } = raw;
+      const update = { $set: { ...rest, customerId }, $setOnInsert: { comID } };
       if (rest.status === undefined) {
-        delete update.$set.status;
+        update.$setOnInsert.status = 'pending';
       }
       const doc = await Communication.findOneAndUpdate(
         { customerId, comID },
         update,
         { new: true, upsert: true, setDefaultsOnInsert: true, includeResultMetadata: true }
       );
-      // includeResultMetadata returns { value, lastErrorObject }
       const value = doc.value || doc;
       const wasInserted = !!(doc.lastErrorObject && doc.lastErrorObject.upserted);
       results.push({ doc: value, inserted: wasInserted });
@@ -39,7 +37,7 @@ class CommunicationService {
   }
 
   async findById(id) {
-    const doc = await Communication.findById(id);
+    const doc = await Communication.findOne({ id });
     if (!doc) throw notFound('Communication not found');
     return doc;
   }
@@ -62,23 +60,23 @@ class CommunicationService {
   }
 
   async markSent(id) {
-    return Communication.findByIdAndUpdate(
-      id,
+    return Communication.findOneAndUpdate(
+      { id },
       { $set: { status: 'sent', error: '', sentAt: new Date() }, $inc: { attempts: 1 } },
       { new: true }
     );
   }
 
   async markFailed(id, errorMessage) {
-    return Communication.findByIdAndUpdate(
-      id,
+    return Communication.findOneAndUpdate(
+      { id },
       { $set: { status: 'notsent', error: errorMessage || 'Unknown error' }, $inc: { attempts: 1 } },
       { new: true }
     );
   }
 
   async markUpdateAck(id) {
-    return Communication.findByIdAndUpdate(id, { $set: { updateAckAt: new Date() } }, { new: true });
+    return Communication.findOneAndUpdate({ id }, { $set: { updateAckAt: new Date() } }, { new: true });
   }
 
   async stats({ customerId } = {}) {

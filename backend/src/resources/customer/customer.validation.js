@@ -23,7 +23,7 @@ const createCustomer = {
 };
 
 const updateCustomer = {
-  params: Joi.object({ id: Joi.string().hex().length(24).required() }),
+  params: Joi.object({ id: Joi.string().required() }),
   body: Joi.object({
     name: Joi.string().trim().min(1).max(120),
     firebaseKey: Joi.alternatives().try(Joi.object(), Joi.string()).allow(null, ''),
@@ -40,7 +40,7 @@ const updateCustomer = {
 };
 
 const idParam = {
-  params: Joi.object({ id: Joi.string().hex().length(24).required() }),
+  params: Joi.object({ id: Joi.string().required() }),
 };
 
 const listCustomers = {

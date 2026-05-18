@@ -28,10 +28,10 @@ class CommunicationJob {
     }
 
     if (fetched.length) {
-      await this.commService.upsertMany(customer._id, fetched);
+      await this.commService.upsertMany(customer.id, fetched);
     }
 
-    const pending = await this.commService.listPendingForCustomer(customer._id, 100);
+    const pending = await this.commService.listPendingForCustomer(customer.id, 100);
     let dispatched = 0;
     let failed = 0;
 
@@ -39,10 +39,10 @@ class CommunicationJob {
       const result = await this.dispatcher.dispatch(comm, customer);
       let saved;
       if (result.success) {
-        saved = await this.commService.markSent(comm._id);
+        saved = await this.commService.markSent(comm.id);
         dispatched += 1;
       } else {
-        saved = await this.commService.markFailed(comm._id, result.error);
+        saved = await this.commService.markFailed(comm.id, result.error);
         failed += 1;
       }
 
@@ -81,7 +81,7 @@ class CommunicationJob {
           error: result.success ? '' : (result.error || ''),
         },
       });
-      await this.commService.markUpdateAck(communication._id);
+      await this.commService.markUpdateAck(communication.id);
     } catch (err) {
       logger.warn(`Job: update API call failed for customer=${customer.name} comID=${communication.comID}: ${err.message}`);
     }
