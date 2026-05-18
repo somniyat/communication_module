@@ -34,7 +34,7 @@ class WhatsappModule extends BaseModule {
       const client = this.getClient();
       if (!client) {
         logger.info(`WhatsappModule(dry-run): to=${to} from=${from} message="${communication.message}"`);
-        return this.ok();
+        return this.ok({ dryRun: true });
       }
 
       const mediaUrls = Array.isArray(communication.files)

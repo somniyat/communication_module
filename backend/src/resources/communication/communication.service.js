@@ -77,10 +77,10 @@ class CommunicationService {
     return Communication.find({ customerId, status: 'pending' }).limit(limit);
   }
 
-  async markSent(id) {
+  async markSent(id, { dryRun = false } = {}) {
     return Communication.findOneAndUpdate(
       { id },
-      { $set: { status: 'sent', error: '', sentAt: new Date() }, $inc: { attempts: 1 } },
+      { $set: { status: 'sent', error: '', sentAt: new Date(), dryRun: !!dryRun }, $inc: { attempts: 1 } },
       { new: true }
     );
   }

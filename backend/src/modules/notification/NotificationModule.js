@@ -39,7 +39,7 @@ class NotificationModule extends BaseModule {
       const app = this.getApp(customer);
       if (!app) {
         logger.info(`NotificationModule(dry-run): token=${token} message="${communication.message}"`);
-        return this.ok();
+        return this.ok({ dryRun: true });
       }
 
       // eslint-disable-next-line global-require

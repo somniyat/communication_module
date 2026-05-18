@@ -24,6 +24,7 @@ const communicationSchema = new mongoose.Schema(
 
     status: { type: String, enum: STATUSES, default: 'pending', index: true },
     error: { type: String, default: '' },
+    dryRun: { type: Boolean, default: false },
 
     attempts: { type: Number, default: 0 },
     sentAt: { type: Date, default: null },
