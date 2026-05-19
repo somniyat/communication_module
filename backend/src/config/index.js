@@ -1,4 +1,6 @@
-require('dotenv').config();
+const path = require('path');
+// Load backend/.env regardless of which directory the process was started in.
+require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
 
 const toBool = (v, fallback = false) => {
   if (v === undefined || v === null || v === '') return fallback;
