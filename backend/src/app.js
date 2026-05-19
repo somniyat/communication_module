@@ -12,7 +12,15 @@ const { notFoundApi, errorHandler } = require('./api/middlewares/error.middlewar
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet({
+  // Drop the auto-HTTPS upgrade directive so subresources can load over HTTP.
+  contentSecurityPolicy: {
+    useDefaults: true,
+    directives: { 'upgrade-insecure-requests': null },
+  },
+  // No HSTS unless explicitly opted in — only meaningful behind real TLS.
+  strictTransportSecurity: false,
+}));
 app.use(cors());
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
