@@ -48,8 +48,7 @@ class MailModule extends BaseModule {
         from,
         to,
         subject: communication.subject || 'Notification',
-        text: communication.message,
-        html: communication.html || undefined,
+        html: communication.html || communication.message || '',
         attachments: (communication.files || []).map((f) =>
           typeof f === 'string' ? { path: f } : f
         ),
