@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1420 870" xmlns="http://www.w3.org/2000/svg" width="1420" height="870">
+<defs>
+  <marker id="ab" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L7,2.5 z" fill="#3b82f6"/></marker>
+  <marker id="ag" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L7,2.5 z" fill="#10b981"/></marker>
+  <marker id="aa" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L7,2.5 z" fill="#f59e0b"/></marker>
+  <marker id="ap" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L7,2.5 z" fill="#a78bfa"/></marker>
+  <marker id="ar" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L7,2.5 z" fill="#f97316"/></marker>
+  <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+    <circle cx="0" cy="0" r="0.9" fill="#0f2540" opacity="0.8"/>
+  </pattern>
+</defs>
+
+<!-- background -->
+<rect width="1420" height="870" fill="#06111f"/>
+<rect width="1420" height="870" fill="url(#dots)"/>
+
+<!-- column divider -->
+<line x1="705" y1="10" x2="705" y2="840" stroke="#0f2540" stroke-width="1" stroke-dasharray="6,6"/>
+
+<!-- ═══════════ LEFT COLUMN — API FLOW ═══════════ -->
+
+<!-- FRONTEND -->
+<rect x="10" y="10" width="686" height="128" rx="7" fill="#08192e" stroke="#1e4080" stroke-width="1.5"/>
+<rect x="10" y="10" width="686" height="26" rx="7" fill="#1e3a6e"/>
+<rect x="10" y="26" width="686" height="10" fill="#1e3a6e"/>
+<text x="22" y="24" fill="#93c5fd" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">BROWSER / FRONTEND</text>
+
+<rect x="20" y="44" width="193" height="84" rx="4" fill="#050f1e" stroke="#1d4ed8" stroke-width="1"/>
+<text x="30" y="59" fill="#93c5fd" font-size="9.5" font-family="'Courier New',monospace" font-weight="700">React SPA</text>
+<text x="30" y="73" fill="#475569" font-size="8" font-family="'Courier New',monospace">PrimeReact · Tailwind CSS</text>
+<text x="30" y="85" fill="#475569" font-size="8" font-family="'Courier New',monospace">lara-light-indigo theme</text>
+<text x="30" y="97" fill="#475569" font-size="8" font-family="'Courier New',monospace">ProtectedRoute (token check)</text>
+<text x="30" y="109" fill="#475569" font-size="8" font-family="'Courier New',monospace">modules/ (slice · api · ui)</text>
+<text x="30" y="121" fill="#1d4ed8" font-size="7.5" font-family="'Courier New',monospace">Vite dev proxy /api → :4000</text>
+
+<rect x="225" y="44" width="205" height="84" rx="4" fill="#050f1e" stroke="#1d4ed8" stroke-width="1"/>
+<text x="235" y="59" fill="#93c5fd" font-size="9.5" font-family="'Courier New',monospace" font-weight="700">Redux Toolkit</text>
+<text x="235" y="73" fill="#475569" font-size="8" font-family="'Courier New',monospace">auth · customer</text>
+<text x="235" y="85" fill="#475569" font-size="8" font-family="'Courier New',monospace">communication · dashboard</text>
+<text x="235" y="97" fill="#475569" font-size="8" font-family="'Courier New',monospace">createSlice + createAsyncThunk</text>
+<text x="235" y="109" fill="#475569" font-size="8" font-family="'Courier New',monospace">status: idle|loading|succeeded</text>
+<text x="235" y="121" fill="#475569" font-size="8" font-family="'Courier New',monospace">api/ layer per module</text>
+
+<rect x="442" y="44" width="244" height="84" rx="4" fill="#050f1e" stroke="#1d4ed8" stroke-width="1"/>
+<text x="452" y="59" fill="#93c5fd" font-size="9.5" font-family="'Courier New',monospace" font-weight="700">Axios + Request Interceptor</text>
+<text x="452" y="73" fill="#475569" font-size="8" font-family="'Courier New',monospace">baseURL: /api</text>
+<text x="452" y="85" fill="#475569" font-size="8" font-family="'Courier New',monospace">request → attach Bearer token</text>
+<text x="452" y="97" fill="#475569" font-size="8" font-family="'Courier New',monospace">  from localStorage (cm.token)</text>
+<text x="452" y="109" fill="#475569" font-size="8" font-family="'Courier New',monospace">response 401 → clearToken()</text>
+<text x="452" y="121" fill="#1d4ed8" font-size="7.5" font-family="'Courier New',monospace">window.location.assign('/login')</text>
+
+<line x1="213" y1="86" x2="222" y2="86" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+<line x1="430" y1="86" x2="439" y2="86" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+<line x1="353" y1="138" x2="353" y2="156" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ab)"/>
+<text x="358" y="150" fill="#3b82f6" font-size="7.5" font-family="'Courier New',monospace">HTTP /api/*</text>
+
+<!-- EXPRESS APP -->
+<rect x="10" y="158" width="686" height="157" rx="7" fill="#071a0f" stroke="#14532d" stroke-width="1.5"/>
+<rect x="10" y="158" width="686" height="26" rx="7" fill="#14532d"/>
+<rect x="10" y="174" width="686" height="10" fill="#14532d"/>
+<text x="22" y="172" fill="#86efac" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">EXPRESS APP  ·  Node.js  ·  app.js</text>
+
+<rect x="20" y="190" width="128" height="48" rx="4" fill="#030f07" stroke="#166534" stroke-width="0.8"/>
+<text x="30" y="204" fill="#4ade80" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">Helmet</text>
+<text x="30" y="217" fill="#15803d" font-size="7.5" font-family="'Courier New',monospace">CSP no upgrade-insecure</text>
+<text x="30" y="229" fill="#15803d" font-size="7.5" font-family="'Courier New',monospace">HSTS disabled (HTTP safe)</text>
+
+<rect x="158" y="190" width="80" height="48" rx="4" fill="#030f07" stroke="#166534" stroke-width="0.8"/>
+<text x="168" y="204" fill="#4ade80" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">CORS</text>
+<text x="168" y="217" fill="#15803d" font-size="7.5" font-family="'Courier New',monospace">open in dev</text>
+
+<rect x="248" y="190" width="90" height="48" rx="4" fill="#030f07" stroke="#166534" stroke-width="0.8"/>
+<text x="258" y="204" fill="#4ade80" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">Morgan</text>
+<text x="258" y="217" fill="#15803d" font-size="7.5" font-family="'Courier New',monospace">combined (prod)</text>
+<text x="258" y="229" fill="#15803d" font-size="7.5" font-family="'Courier New',monospace">dev (dev)</text>
+
+<rect x="348" y="190" width="338" height="48" rx="4" fill="#030f07" stroke="#166534" stroke-width="0.8"/>
+<text x="358" y="204" fill="#4ade80" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">Static SPA Serving</text>
+<text x="358" y="217" fill="#15803d" font-size="7.5" font-family="'Courier New',monospace">presence-based: if backend/client/index.html exists</text>
+<text x="358" y="229" fill="#15803d" font-size="7.5" font-family="'Courier New',monospace">SPA fallback regex: /^(?!\/api(\/|$)).*/</text>
+
+<rect x="20" y="250" width="666" height="55" rx="4" fill="#040e07" stroke="#166534" stroke-width="0.8"/>
+<text x="30" y="264" fill="#86efac" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">/api  Router</text>
+<text x="90" y="264" fill="#64748b" font-size="7.5" font-family="'Courier New',monospace">   JWT authRequired → Joi validate → error handler</text>
+
+<rect x="30" y="270" width="105" height="26" rx="3" fill="#021507" stroke="#15803d" stroke-width="0.8"/>
+<text x="40" y="285" fill="#86efac" font-size="7.5" font-family="'Courier New',monospace">/auth  (public)</text>
+
+<rect x="143" y="270" width="128" height="26" rx="3" fill="#021507" stroke="#15803d" stroke-width="0.8"/>
+<text x="153" y="285" fill="#86efac" font-size="7.5" font-family="'Courier New',monospace">/users  [authRequired]</text>
+
+<rect x="279" y="270" width="148" height="26" rx="3" fill="#021507" stroke="#15803d" stroke-width="0.8"/>
+<text x="289" y="285" fill="#86efac" font-size="7.5" font-family="'Courier New',monospace">/customers  [auth+admin]</text>
+
+<rect x="435" y="270" width="214" height="26" rx="3" fill="#021507" stroke="#15803d" stroke-width="0.8"/>
+<text x="445" y="285" fill="#86efac" font-size="7.5" font-family="'Courier New',monospace">/communications  [auth+admin]</text>
+
+<line x1="200" y1="315" x2="200" y2="333" stroke="#22c55e" stroke-width="1.5" marker-end="url(#ag)"/>
+<line x1="500" y1="315" x2="500" y2="333" stroke="#22c55e" stroke-width="1.5" marker-end="url(#ag)"/>
+
+<!-- RESOURCES -->
+<rect x="10" y="335" width="686" height="170" rx="7" fill="#0e0620" stroke="#5b21b6" stroke-width="1.5"/>
+<rect x="10" y="335" width="686" height="26" rx="7" fill="#4c1d95"/>
+<rect x="10" y="351" width="686" height="10" fill="#4c1d95"/>
+<text x="22" y="349" fill="#ddd6fe" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">RESOURCES  ·  model / service / controller / routes / validation</text>
+
+<rect x="20" y="368" width="158" height="128" rx="4" fill="#07031a" stroke="#6d28d9" stroke-width="1"/>
+<text x="30" y="383" fill="#c4b5fd" font-size="9" font-family="'Courier New',monospace" font-weight="700">Auth</text>
+<line x1="24" y1="387" x2="174" y2="387" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="30" y="400" fill="#6d28d9" font-size="7.5" font-family="'Courier New',monospace">POST /register  (public)</text>
+<text x="30" y="412" fill="#6d28d9" font-size="7.5" font-family="'Courier New',monospace">POST /login</text>
+<text x="30" y="424" fill="#6d28d9" font-size="7.5" font-family="'Courier New',monospace">GET  /me  [authRequired]</text>
+<text x="30" y="437" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">signToken(user)</text>
+<text x="30" y="449" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">sub = user.id</text>
+<text x="30" y="461" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">expiresIn: 7d</text>
+<text x="30" y="473" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">bcrypt hash (salt 10)</text>
+<text x="30" y="485" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">id prefix: usr_</text>
+
+<rect x="186" y="368" width="145" height="128" rx="4" fill="#07031a" stroke="#6d28d9" stroke-width="1"/>
+<text x="196" y="383" fill="#c4b5fd" font-size="9" font-family="'Courier New',monospace" font-weight="700">User</text>
+<line x1="190" y1="387" x2="327" y2="387" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="196" y="400" fill="#6d28d9" font-size="7.5" font-family="'Courier New',monospace">GET  /users  [admin]</text>
+<text x="196" y="412" fill="#6d28d9" font-size="7.5" font-family="'Courier New',monospace">GET  /users/:id</text>
+<text x="196" y="425" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">id: usr_xxxxxxxxxx</text>
+<text x="196" y="437" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">email (unique, lower)</text>
+<text x="196" y="449" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">passwordHash hidden</text>
+<text x="196" y="461" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">role: admin | user</text>
+<text x="196" y="473" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">_id never exposed</text>
+
+<rect x="339" y="368" width="168" height="128" rx="4" fill="#07031a" stroke="#6d28d9" stroke-width="1"/>
+<text x="349" y="383" fill="#c4b5fd" font-size="9" font-family="'Courier New',monospace" font-weight="700">Customer</text>
+<line x1="343" y1="387" x2="503" y2="387" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="349" y="400" fill="#6d28d9" font-size="7.5" font-family="'Courier New',monospace">CRUD + bulk-delete</text>
+<text x="349" y="413" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">id: cus_xxxxxxxxxx</text>
+<text x="349" y="425" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">firebaseKey (hidden toJSON)</text>
+<text x="349" y="437" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">hasFirebaseKey (exposed)</text>
+<text x="349" y="449" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">Twilio creds per-customer</text>
+<text x="349" y="461" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">communicationFetchApi{}</text>
+<text x="349" y="473" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">communicationUpdateApi{}</text>
+<text x="349" y="485" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">withoutNotificationBody</text>
+
+<rect x="515" y="368" width="171" height="128" rx="4" fill="#07031a" stroke="#6d28d9" stroke-width="1"/>
+<text x="525" y="383" fill="#c4b5fd" font-size="9" font-family="'Courier New',monospace" font-weight="700">Communication</text>
+<line x1="519" y1="387" x2="682" y2="387" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="525" y="400" fill="#6d28d9" font-size="7.5" font-family="'Courier New',monospace">GET list · stats</text>
+<text x="525" y="413" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">id: com_xxxxxxxxxx</text>
+<text x="525" y="425" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">customerId: cus_ string</text>
+<text x="525" y="437" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">unique(customerId, comID)</text>
+<text x="525" y="449" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">normalizeIncoming():</text>
+<text x="525" y="461" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">  fcmtoken → fcmToken</text>
+<text x="525" y="473" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">  phone → phoneNumber</text>
+<text x="525" y="485" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">  without_notif_body → …</text>
+
+<line x1="353" y1="505" x2="353" y2="523" stroke="#10b981" stroke-width="1.5" marker-end="url(#ag)"/>
+
+<!-- MONGODB -->
+<rect x="10" y="525" width="686" height="108" rx="7" fill="#03120a" stroke="#065f46" stroke-width="1.5"/>
+<rect x="10" y="525" width="686" height="26" rx="7" fill="#065f46"/>
+<rect x="10" y="541" width="686" height="10" fill="#065f46"/>
+<text x="22" y="539" fill="#6ee7b7" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">MONGODB  ·  Mongoose ODM  ·  ensureIds.js runs on startup</text>
+
+<rect x="20" y="556" width="208" height="68" rx="4" fill="#020a05" stroke="#059669" stroke-width="0.8"/>
+<text x="30" y="570" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">users</text>
+<text x="30" y="583" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">id · email · passwordHash</text>
+<text x="30" y="595" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">name · role · timestamps</text>
+<text x="30" y="607" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">toJSON: strips _id + hash</text>
+<text x="30" y="619" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">startup: backfill id if missing</text>
+
+<rect x="238" y="556" width="218" height="68" rx="4" fill="#020a05" stroke="#059669" stroke-width="0.8"/>
+<text x="248" y="570" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">customers</text>
+<text x="248" y="583" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">id · firebaseKey · jobIntervalMs</text>
+<text x="248" y="595" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">communicationFetchApi</text>
+<text x="248" y="607" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">communicationUpdateApi</text>
+<text x="248" y="619" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">active · withoutNotificationBody</text>
+
+<rect x="466" y="556" width="220" height="68" rx="4" fill="#020a05" stroke="#059669" stroke-width="0.8"/>
+<text x="476" y="570" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">communications</text>
+<text x="476" y="583" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">compound idx: (customerId, comID)</text>
+<text x="476" y="595" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">status: pending|sent|notsent</text>
+<text x="476" y="607" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">dryRun · rawPayload · sentAt</text>
+<text x="476" y="619" fill="#065f46" font-size="7.5" font-family="'Courier New',monospace">attempts · error · updateAckAt</text>
+
+<!-- LEGEND -->
+<rect x="10" y="644" width="686" height="74" rx="6" fill="#050e1a" stroke="#0f2540" stroke-width="1"/>
+<text x="22" y="659" fill="#334155" font-size="7.5" font-family="'Courier New',monospace" letter-spacing="1.5">LEGEND</text>
+<line x1="70" y1="655" x2="106" y2="655" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#ab)"/>
+<text x="110" y="659" fill="#334155" font-size="7.5" font-family="'Courier New',monospace">API request flow</text>
+<line x1="210" y1="655" x2="246" y2="655" stroke="#10b981" stroke-width="1.5" marker-end="url(#ag)"/>
+<text x="250" y="659" fill="#334155" font-size="7.5" font-family="'Courier New',monospace">DB read / write</text>
+<line x1="338" y1="655" x2="374" y2="655" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#aa)"/>
+<text x="378" y="659" fill="#334155" font-size="7.5" font-family="'Courier New',monospace">job tick / data flow</text>
+<line x1="480" y1="655" x2="516" y2="655" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<text x="520" y="659" fill="#334155" font-size="7.5" font-family="'Courier New',monospace">module dispatch</text>
+<text x="22" y="675" fill="#1e3a5f" font-size="7.5" font-family="'Courier New',monospace">ID prefixes:  usr_  cus_  com_  + 10 random alnum chars  ·  _id never exposed in API responses</text>
+<text x="22" y="688" fill="#1e3a5f" font-size="7.5" font-family="'Courier New',monospace">dryRun: module returns ok({dryRun:true}) when transport unconfigured — persisted on comm + shown as UI badge</text>
+<text x="22" y="701" fill="#1e3a5f" font-size="7.5" font-family="'Courier New',monospace">JWT sub = user.id  ·  dotenv path pinned to __dirname (portable startup from any cwd)</text>
+
+<!-- ═══════════ RIGHT COLUMN — JOB FLOW ═══════════ -->
+
+<!-- cross-column DB connector -->
+<path d="M 716 590 Q 700 590 700 500 Q 700 410 716 410" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,3" fill="none"/>
+<text x="697" y="502" fill="#78350f" font-size="7" font-family="'Courier New',monospace" transform="rotate(-90,697,502)">DB R/W</text>
+
+<!-- SCHEDULER -->
+<rect x="716" y="10" width="694" height="112" rx="7" fill="#120c00" stroke="#92400e" stroke-width="1.5"/>
+<rect x="716" y="10" width="694" height="26" rx="7" fill="#92400e"/>
+<rect x="716" y="26" width="694" height="10" fill="#92400e"/>
+<text x="728" y="24" fill="#fde68a" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">SCHEDULER  ·  scheduler.js</text>
+
+<rect x="726" y="44" width="326" height="68" rx="4" fill="#080500" stroke="#b45309" stroke-width="1"/>
+<text x="736" y="59" fill="#fbbf24" font-size="9" font-family="'Courier New',monospace" font-weight="700">Per-customer setInterval</text>
+<text x="736" y="73" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">key: customer.id  (cus_xxxxxxxxxx)</text>
+<text x="736" y="85" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">interval: customer.jobIntervalMs  (default 1000 ms)</text>
+<text x="736" y="97" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">only for active customers  (customer.active === true)</text>
+<text x="736" y="109" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">stopped immediately on customer deactivate</text>
+
+<rect x="1062" y="44" width="338" height="68" rx="4" fill="#080500" stroke="#b45309" stroke-width="1"/>
+<text x="1072" y="59" fill="#fbbf24" font-size="9" font-family="'Courier New',monospace" font-weight="700">Auto-Refresh every 30 s</text>
+<text x="1072" y="73" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">re-queries all customers from DB</text>
+<text x="1072" y="85" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">starts new intervals for newly active customers</text>
+<text x="1072" y="97" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">clears intervals for inactive / changed customers</text>
+<text x="1072" y="109" fill="#78350f" font-size="7.5" font-family="'Courier New',monospace">no restart needed for config changes</text>
+
+<line x1="1063" y1="122" x2="1063" y2="140" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#aa)"/>
+<text x="1068" y="135" fill="#f59e0b" font-size="7.5" font-family="'Courier New',monospace">tick</text>
+
+<!-- COMMUNICATION JOB -->
+<rect x="716" y="142" width="694" height="195" rx="7" fill="#120600" stroke="#c2410c" stroke-width="1.5"/>
+<rect x="716" y="142" width="694" height="26" rx="7" fill="#9a3412"/>
+<rect x="716" y="158" width="694" height="10" fill="#9a3412"/>
+<text x="728" y="156" fill="#fed7aa" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">COMMUNICATION JOB  ·  CommunicationJob.js</text>
+
+<rect x="726" y="172" width="320" height="68" rx="4" fill="#0a0200" stroke="#c2410c" stroke-width="1"/>
+<text x="736" y="187" fill="#fb923c" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">①  FETCH   communicationFetchApi</text>
+<text x="736" y="200" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">GET/POST customer.communicationFetchApi.url</text>
+<text x="736" y="212" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">custom headers per customer</text>
+<text x="736" y="224" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">accepts: array | {data:[]} | {items:[]}</text>
+<text x="736" y="233" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">runs normalizeIncoming() on each item</text>
+
+<rect x="1058" y="172" width="342" height="68" rx="4" fill="#0a0200" stroke="#c2410c" stroke-width="1"/>
+<text x="1068" y="187" fill="#fb923c" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">②  UPSERT   communications</text>
+<text x="1068" y="200" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">upsertMany by (customerId, comID)</text>
+<text x="1068" y="212" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">status: pending  (new items only)</text>
+<text x="1068" y="224" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">rawPayload = original fetched object</text>
+<text x="1068" y="233" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">skips already-sent; deduplicates</text>
+
+<rect x="726" y="254" width="320" height="68" rx="4" fill="#0a0200" stroke="#c2410c" stroke-width="1"/>
+<text x="736" y="269" fill="#fb923c" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">③  DISPATCH   DispatcherService</text>
+<text x="736" y="282" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">fetch all pending comms for customer</text>
+<text x="736" y="294" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">dispatcher.send(comm, customer)</text>
+<text x="736" y="306" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">markSent(comm.id, {dryRun})</text>
+<text x="736" y="315" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">persists dryRun flag on record</text>
+
+<rect x="1058" y="254" width="342" height="68" rx="4" fill="#0a0200" stroke="#c2410c" stroke-width="1"/>
+<text x="1068" y="269" fill="#fb923c" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">④  UPDATE   communicationUpdateApi</text>
+<text x="1068" y="282" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">POST customer.communicationUpdateApi.url</text>
+<text x="1068" y="294" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">body: { id: comID, isSent: 1|0, error: "" }</text>
+<text x="1068" y="306" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">isSent=1 success · 0 failure</text>
+<text x="1068" y="315" fill="#7c2d12" font-size="7.5" font-family="'Courier New',monospace">custom headers per customer</text>
+
+<line x1="886" y1="240" x2="1055" y2="206" stroke="#f97316" stroke-width="0.8" stroke-dasharray="3,2"/>
+<line x1="886" y1="322" x2="1055" y2="288" stroke="#f97316" stroke-width="0.8" stroke-dasharray="3,2"/>
+<line x1="1063" y1="337" x2="1063" y2="355" stroke="#f97316" stroke-width="1.5" marker-end="url(#ar)"/>
+
+<!-- DISPATCHER -->
+<rect x="716" y="357" width="694" height="54" rx="6" fill="#0e0620" stroke="#6d28d9" stroke-width="1.5"/>
+<text x="728" y="376" fill="#c4b5fd" font-size="9.5" font-family="'Courier New',monospace" font-weight="700">DISPATCHER SERVICE</text>
+<text x="868" y="376" fill="#475569" font-size="8" font-family="'Courier New',monospace">{ type → moduleInstance }  map</text>
+<text x="728" y="393" fill="#334155" font-size="7.5" font-family="'Courier New',monospace">email · sms · whatsapp · notification · inapp  →  each extends BaseModule  →  ok({dryRun?}) | fail(err)</text>
+
+<line x1="765" y1="411" x2="765" y2="429" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<line x1="884" y1="411" x2="884" y2="429" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<line x1="1005" y1="411" x2="1005" y2="429" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<line x1="1162" y1="411" x2="1162" y2="429" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<line x1="1333" y1="411" x2="1333" y2="429" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+
+<!-- MODULES -->
+<rect x="716" y="431" width="694" height="178" rx="7" fill="#0b0618" stroke="#5b21b6" stroke-width="1.5"/>
+<rect x="716" y="431" width="694" height="26" rx="7" fill="#4c1d95"/>
+<rect x="716" y="447" width="694" height="10" fill="#4c1d95"/>
+<text x="728" y="445" fill="#ddd6fe" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">CHANNEL MODULES  ·  extends BaseModule</text>
+
+<rect x="726" y="463" width="128" height="136" rx="4" fill="#06021a" stroke="#6d28d9" stroke-width="1"/>
+<text x="736" y="478" fill="#c4b5fd" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">MailModule</text>
+<line x1="730" y1="482" x2="850" y2="482" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="736" y="495" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">nodemailer</text>
+<text x="736" y="507" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">html body (not text)</text>
+<text x="736" y="519" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">resolveRecipients()</text>
+<text x="736" y="531" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">comm.email or</text>
+<text x="736" y="543" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">defaultRecipientEmails</text>
+<text x="736" y="555" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">REJECT_UNAUTHORIZED</text>
+<text x="736" y="567" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">dryRun if no SMTP_HOST</text>
+<text x="736" y="579" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">jsonTransport (dry)</text>
+<text x="736" y="591" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">from: noReplyEmail</text>
+
+<rect x="862" y="463" width="118" height="136" rx="4" fill="#06021a" stroke="#6d28d9" stroke-width="1"/>
+<text x="872" y="478" fill="#c4b5fd" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">SmsModule</text>
+<line x1="866" y1="482" x2="976" y2="482" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="872" y="495" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">Twilio REST</text>
+<text x="872" y="507" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">per-customer creds</text>
+<text x="872" y="519" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">accountSid</text>
+<text x="872" y="531" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">authToken</text>
+<text x="872" y="543" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">smsSenderId</text>
+<text x="872" y="555" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">to: phoneNumber</text>
+<text x="872" y="567" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">dryRun if no creds</text>
+
+<rect x="988" y="463" width="130" height="136" rx="4" fill="#06021a" stroke="#6d28d9" stroke-width="1"/>
+<text x="998" y="478" fill="#c4b5fd" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">WhatsAppModule</text>
+<line x1="992" y1="482" x2="1114" y2="482" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="998" y="495" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">Twilio REST</text>
+<text x="998" y="507" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">per-customer creds</text>
+<text x="998" y="519" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">from: whatsapp:+</text>
+<text x="998" y="531" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">whatsappSenderPhone</text>
+<text x="998" y="543" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">to: whatsapp:+num</text>
+<text x="998" y="555" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">phoneNumber field</text>
+<text x="998" y="567" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">dryRun if no creds</text>
+
+<rect x="1126" y="463" width="160" height="136" rx="4" fill="#06021a" stroke="#6d28d9" stroke-width="1"/>
+<text x="1136" y="478" fill="#c4b5fd" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">NotificationModule</text>
+<line x1="1130" y1="482" x2="1282" y2="482" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="1136" y="495" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">firebase-admin SDK</text>
+<text x="1136" y="507" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">SHA-256 cred fingerprint</text>
+<text x="1136" y="519" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">re-init on key change</text>
+<text x="1136" y="531" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">withoutNotifBody:</text>
+<text x="1136" y="543" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">  comm value if !null</text>
+<text x="1136" y="555" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">  else customer default</text>
+<text x="1136" y="567" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">data-only: data.data=JSON</text>
+<text x="1136" y="579" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">normal: notification{}+data</text>
+<text x="1136" y="591" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">to: comm.fcmToken</text>
+
+<rect x="1294" y="463" width="106" height="136" rx="4" fill="#06021a" stroke="#6d28d9" stroke-width="1"/>
+<text x="1304" y="478" fill="#c4b5fd" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">InAppModule</text>
+<line x1="1298" y1="482" x2="1396" y2="482" stroke="#4c1d95" stroke-width="0.8"/>
+<text x="1304" y="495" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">no-op transport</text>
+<text x="1304" y="507" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">always returns</text>
+<text x="1304" y="519" fill="#a78bfa" font-size="7.5" font-family="'Courier New',monospace">ok({})</text>
+<text x="1304" y="531" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">delivery handled</text>
+<text x="1304" y="543" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">by client app</text>
+<text x="1304" y="555" fill="#475569" font-size="7.5" font-family="'Courier New',monospace">status → sent</text>
+
+<line x1="790" y1="599" x2="790" y2="653" stroke="#6d28d9" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<line x1="921" y1="599" x2="921" y2="653" stroke="#6d28d9" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<line x1="1053" y1="599" x2="1053" y2="653" stroke="#6d28d9" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+<line x1="1206" y1="599" x2="1206" y2="653" stroke="#6d28d9" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ap)"/>
+
+<!-- EXTERNAL SERVICES -->
+<rect x="716" y="655" width="694" height="200" rx="7" fill="#031208" stroke="#065f46" stroke-width="1.5"/>
+<rect x="716" y="655" width="694" height="26" rx="7" fill="#064e3b"/>
+<rect x="716" y="671" width="694" height="10" fill="#064e3b"/>
+<text x="728" y="669" fill="#6ee7b7" font-size="10" font-family="'Courier New',monospace" font-weight="700" letter-spacing="2.5">EXTERNAL SERVICES</text>
+
+<rect x="726" y="686" width="155" height="158" rx="4" fill="#020a04" stroke="#059669" stroke-width="1"/>
+<text x="736" y="701" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">SMTP Server</text>
+<line x1="730" y1="706" x2="877" y2="706" stroke="#065f46" stroke-width="0.8"/>
+<text x="736" y="719" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">SMTP_HOST</text>
+<text x="736" y="731" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">SMTP_PORT</text>
+<text x="736" y="743" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">SMTP_USER / PASS</text>
+<text x="736" y="755" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">SMTP_SECURE</text>
+<text x="736" y="767" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">SMTP_REJECT_UNAUTHORIZED</text>
+<text x="736" y="779" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">noReplyEmail (customer)</text>
+<text x="736" y="835" fill="#1e3a5f" font-size="7" font-family="'Courier New',monospace">absent → dryRun mode</text>
+
+<rect x="890" y="686" width="198" height="158" rx="4" fill="#020a04" stroke="#059669" stroke-width="1"/>
+<text x="900" y="701" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">Twilio API</text>
+<line x1="894" y1="706" x2="1084" y2="706" stroke="#065f46" stroke-width="0.8"/>
+<text x="900" y="719" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">SMS + WhatsApp</text>
+<text x="900" y="731" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">per-customer credentials:</text>
+<text x="900" y="743" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">  accountSid</text>
+<text x="900" y="755" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">  authToken</text>
+<text x="900" y="767" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">  smsSenderId</text>
+<text x="900" y="779" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">  whatsappSenderPhone</text>
+<text x="900" y="835" fill="#1e3a5f" font-size="7" font-family="'Courier New',monospace">absent → dryRun mode</text>
+
+<rect x="1097" y="686" width="196" height="158" rx="4" fill="#020a04" stroke="#059669" stroke-width="1"/>
+<text x="1107" y="701" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">Firebase FCM</text>
+<line x1="1101" y1="706" x2="1289" y2="706" stroke="#065f46" stroke-width="0.8"/>
+<text x="1107" y="719" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">firebase-admin SDK</text>
+<text x="1107" y="731" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">credentials JSON per customer</text>
+<text x="1107" y="743" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">SHA-256 fingerprint cache</text>
+<text x="1107" y="755" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">app.delete() on key change</text>
+<text x="1107" y="767" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">no restart for key rotation</text>
+<text x="1107" y="779" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">to: comm.fcmToken</text>
+<text x="1107" y="835" fill="#1e3a5f" font-size="7" font-family="'Courier New',monospace">absent → dryRun mode</text>
+
+<rect x="1302" y="686" width="98" height="158" rx="4" fill="#020a04" stroke="#059669" stroke-width="1"/>
+<text x="1312" y="701" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace" font-weight="700">Customer</text>
+<text x="1312" y="713" fill="#34d399" font-size="8.5" font-family="'Courier New',monospace">APIs</text>
+<line x1="1306" y1="717" x2="1396" y2="717" stroke="#065f46" stroke-width="0.8"/>
+<text x="1312" y="730" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">fetchApi</text>
+<text x="1312" y="742" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">configurable</text>
+<text x="1312" y="754" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">url · method</text>
+<text x="1312" y="766" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">headers{}</text>
+<text x="1312" y="778" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">updateApi</text>
+<text x="1312" y="790" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">url · method</text>
+<text x="1312" y="802" fill="#047857" font-size="7.5" font-family="'Courier New',monospace">headers{}</text>
+</svg>
