@@ -146,7 +146,12 @@ export default function CommunicationListPage() {
             )}
           </div>
         )} />
-        <Column header="Recipient" body={(r) => r.email || r.phoneNumber || r.fcmToken || '—'} />
+        <Column header="Recipient" body={(r) => {
+          const value = r.email || r.phoneNumber || r.fcmToken || '—';
+          return value.length > 30
+            ? <span title={value}>{value.slice(0, 28)}…</span>
+            : value;
+        }} />
         <Column header="Sent at" body={(r) => formatDate(r.sentAt)} />
         <Column header="Created" body={(r) => formatDate(r.createdAt)} />
       </DataTable>
