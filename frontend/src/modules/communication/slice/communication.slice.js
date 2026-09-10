@@ -5,6 +5,7 @@ import {
   deleteCommunication,
   bulkDeleteCommunications,
   clearAllCommunications,
+  retryCommunication,
 } from './communication.thunks';
 
 const initialState = {
@@ -58,6 +59,12 @@ const communicationSlice = createSlice({
         const deleted = a.payload?.deletedCount || 0;
         s.items = [];
         s.meta.total = Math.max(0, s.meta.total - deleted);
+      })
+
+      .addCase(retryCommunication.fulfilled, (s, a) => {
+        s.selected = a.payload;
+        const idx = s.items.findIndex((c) => c.id === a.payload.id);
+        if (idx !== -1) s.items[idx] = a.payload;
       });
   },
 });

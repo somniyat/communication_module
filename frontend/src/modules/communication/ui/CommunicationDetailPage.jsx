@@ -5,7 +5,7 @@ import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 import { Message } from 'primereact/message';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { fetchCommunication } from '../slice/communication.thunks';
+import { fetchCommunication, retryCommunication } from '../slice/communication.thunks';
 import { clearSelectedCommunication } from '../slice/communication.slice';
 import StatusTag from './components/StatusTag';
 import TypeIcon from './components/TypeIcon';
@@ -22,11 +22,18 @@ export default function CommunicationDetailPage() {
     return () => dispatch(clearSelectedCommunication());
   }, [dispatch, id]);
 
+  const handleRetry = () => dispatch(retryCommunication(selected.id));
+
   if (!selected) return <div>Loading…</div>;
 
   return (
     <div>
-      <Button icon="pi pi-arrow-left" label="Back" text onClick={() => navigate(-1)} className="mb-3" />
+      <div className="flex items-center gap-3 mb-3">
+        <Button icon="pi pi-arrow-left" label="Back" text onClick={() => navigate(-1)} />
+        {selected.status === 'notsent' && (
+          <Button icon="pi pi-refresh" label="Retry" severity="warning" onClick={handleRetry} />
+        )}
+      </div>
       <Card title={`comID: ${selected.comID}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Info label="Type"><TypeIcon type={selected.type} /></Info>

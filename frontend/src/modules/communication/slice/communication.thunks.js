@@ -48,6 +48,17 @@ export const bulkDeleteCommunications = createAsyncThunk(
   }
 );
 
+export const retryCommunication = createAsyncThunk(
+  'communication/retry',
+  async (id, { rejectWithValue }) => {
+    try {
+      return await communicationApi.retry(id);
+    } catch (err) {
+      return rejectWithValue(apiError(err));
+    }
+  }
+);
+
 export const clearAllCommunications = createAsyncThunk(
   'communication/clearAll',
   async (filter = {}, { rejectWithValue }) => {

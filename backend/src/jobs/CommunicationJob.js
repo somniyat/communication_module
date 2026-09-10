@@ -20,11 +20,13 @@ class CommunicationJob {
     if (!customer || !customer.active) return { skipped: true };
 
     let fetched = [];
+    const fetchErrors = [];
     try {
       fetched = await this.fetchCommunications(customer);
     } catch (err) {
       logger.error(`Job: fetch failed for customer=${customer.name}: ${err.message}`);
-      return { fetched: 0, dispatched: 0, errors: [err.message] };
+      fetchErrors.push(err.message);
+      // Continue: still dispatch whatever is already pending in the DB
     }
 
     if (fetched.length) {
@@ -49,7 +51,7 @@ class CommunicationJob {
       await this.notifyUpdate(customer, saved, result);
     }
 
-    return { fetched: fetched.length, dispatched, failed };
+    return { fetched: fetched.length, dispatched, failed, errors: fetchErrors };
   }
 
   async fetchCommunications(customer) {

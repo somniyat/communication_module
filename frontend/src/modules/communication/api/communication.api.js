@@ -6,4 +6,5 @@ export const communicationApi = {
   stats: (params) => http.get('/communications/stats', { params }).then((r) => r.data.data),
   remove: (id)    => http.delete(`/communications/${id}`).then((r) => r.data),
   bulkDelete: (body) => http.post('/communications/bulk-delete', body).then((r) => r.data.data),
+  retry: (id) => http.post(`/communications/${id}/retry`).then((r) => r.data.data),
 };
