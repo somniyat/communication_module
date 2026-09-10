@@ -38,27 +38,31 @@ class MailModule extends BaseModule {
   }
 
   async send(communication, customer) {
-    try {
-      const to = this.resolveRecipients(communication, customer);
-      if (!to.length) return this.fail('No recipient email available');
+    const to = this.resolveRecipients(communication, customer);
+    if (!to.length) return this.fail('No recipient email available');
 
+    try {
       const from = (customer && customer.noReplyEmail) || config.smtp.user || 'no-reply@example.com';
+
+      const rawFiles = communication.files;
+      const filesArray = Array.isArray(rawFiles)
+        ? rawFiles
+        : typeof rawFiles === 'string' && rawFiles.trim()
+          ? [rawFiles]
+          : [];
 
       const info = await this.getTransporter().sendMail({
         from,
         to,
         subject: communication.subject || 'Notification',
         html: communication.html || communication.message || '',
-        attachments: (communication.files || []).map((f) =>
-          typeof f === 'string' ? { path: f } : f
-        ),
+        attachments: filesArray.map((f) => (typeof f === 'string' ? { path: f } : f)),
       });
 
       const dryRun = !config.smtp.host;
       logger.debug(`MailModule${dryRun ? '(dry-run)' : ''}: sent to=${to.join(',')} id=${info.messageId || 'n/a'}`);
       return this.ok({ dryRun });
     } catch (err) {
-      // Build a descriptive message including SMTP response code if available.
       const detail = err.responseCode
         ? `${err.responseCode} ${err.response || err.message}`
         : err.message || String(err);
