@@ -58,7 +58,12 @@ class MailModule extends BaseModule {
       logger.debug(`MailModule${dryRun ? '(dry-run)' : ''}: sent to=${to.join(',')} id=${info.messageId || 'n/a'}`);
       return this.ok({ dryRun });
     } catch (err) {
-      return this.fail(err);
+      // Build a descriptive message including SMTP response code if available.
+      const detail = err.responseCode
+        ? `${err.responseCode} ${err.response || err.message}`
+        : err.message || String(err);
+      logger.error(`MailModule: send failed to=${to.join(',')} — ${detail}`);
+      return this.fail(detail || 'Unknown SMTP error');
     }
   }
 }
