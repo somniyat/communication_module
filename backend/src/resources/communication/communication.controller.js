@@ -38,4 +38,9 @@ const bulkDelete = asyncHandler(async (req, res) => {
   res.json({ data: result });
 });
 
-module.exports = { list, getOne, addMany, stats, remove, bulkDelete };
+const retry = asyncHandler(async (req, res) => {
+  const doc = await communicationService.resetToPending(req.params.id);
+  res.json({ data: doc });
+});
+
+module.exports = { list, getOne, addMany, stats, remove, bulkDelete, retry };

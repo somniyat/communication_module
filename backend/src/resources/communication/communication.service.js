@@ -43,10 +43,13 @@ class CommunicationService {
    */
   async upsertMany(customerId, items) {
     const results = [];
+    // These fields are managed exclusively by our system — never let the client overwrite them.
+    const INTERNAL = ['status', 'error', 'dryRun', 'sentAt', 'attempts', 'updateAckAt', 'rawPayload'];
     for (const item of items) {
       const raw = normalizeIncoming(item);
       if (!raw || !raw.comID) continue;
       const { comID, id: _ignoreId, _id: _ignoreUnderId, ...rest } = raw;
+      INTERNAL.forEach((f) => delete rest[f]);
       // Preserve the original fetched object so downstream channels can forward it.
       rest.rawPayload = item;
       const update = { $set: { ...rest, customerId }, $setOnInsert: { comID } };
@@ -98,6 +101,16 @@ class CommunicationService {
       { $set: { status: 'sent', error: '', sentAt: new Date(), dryRun: !!dryRun }, $inc: { attempts: 1 } },
       { new: true }
     );
+  }
+
+  async resetToPending(id) {
+    const doc = await Communication.findOneAndUpdate(
+      { id },
+      { $set: { status: 'pending', error: '', dryRun: false, sentAt: null } },
+      { new: true }
+    );
+    if (!doc) throw notFound('Communication not found');
+    return doc;
   }
 
   async markFailed(id, errorMessage) {
