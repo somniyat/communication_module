@@ -6,27 +6,35 @@ const logger = require('../../utils/logger');
 class MailModule extends BaseModule {
   constructor() {
     super('MailModule');
-    this.transporter = null;
+    this._transporters = new Map(); // fingerprint → transporter
   }
 
-  getTransporter() {
-    if (this.transporter) return this.transporter;
-    if (!config.smtp.host) {
+  _resolveSmtp(customer) {
+    const c = customer && customer.smtp;
+    if (c && c.host) return { host: c.host, port: c.port || 587, secure: !!c.secure, user: c.user || '', pass: c.pass || '', rejectUnauthorized: c.rejectUnauthorized !== false };
+    return config.smtp;
+  }
+
+  getTransporter(customer) {
+    const smtp = this._resolveSmtp(customer);
+    const fp = `${smtp.host}:${smtp.port}:${smtp.user}`;
+    if (this._transporters.has(fp)) return { transporter: this._transporters.get(fp), smtp };
+    if (!smtp.host) {
       logger.warn('MailModule: SMTP not configured, using JSON transport (no real email sent)');
-      this.transporter = nodemailer.createTransport({ jsonTransport: true });
-      return this.transporter;
+      const t = nodemailer.createTransport({ jsonTransport: true });
+      this._transporters.set(fp, t);
+      return { transporter: t, smtp };
     }
-    this.transporter = nodemailer.createTransport({
-      host: config.smtp.host,
-      port: config.smtp.port,
-      secure: config.smtp.secure,
-      auth: config.smtp.user ? { user: config.smtp.user, pass: config.smtp.pass } : undefined,
-      tls: { rejectUnauthorized: config.smtp.rejectUnauthorized },
+    const t = nodemailer.createTransport({
+      host: smtp.host,
+      port: smtp.port,
+      secure: smtp.secure,
+      auth: smtp.user ? { user: smtp.user, pass: smtp.pass } : undefined,
+      tls: { rejectUnauthorized: smtp.rejectUnauthorized },
     });
-    if (!config.smtp.rejectUnauthorized) {
-      logger.warn('MailModule: TLS certificate validation is DISABLED (SMTP_REJECT_UNAUTHORIZED=false)');
-    }
-    return this.transporter;
+    if (!smtp.rejectUnauthorized) logger.warn('MailModule: TLS certificate validation is DISABLED');
+    this._transporters.set(fp, t);
+    return { transporter: t, smtp };
   }
 
   resolveRecipients(communication, customer) {
@@ -42,7 +50,8 @@ class MailModule extends BaseModule {
     if (!to.length) return this.fail('No recipient email available');
 
     try {
-      const from = (customer && customer.noReplyEmail) || config.smtp.user || 'no-reply@example.com';
+      const { transporter, smtp } = this.getTransporter(customer);
+      const from = (customer && customer.noReplyEmail) || smtp.user || 'no-reply@example.com';
 
       const rawFiles = communication.files;
       const filesArray = Array.isArray(rawFiles)
@@ -51,7 +60,7 @@ class MailModule extends BaseModule {
           ? [rawFiles]
           : [];
 
-      const info = await this.getTransporter().sendMail({
+      const info = await transporter.sendMail({
         from,
         to,
         subject: communication.subject || 'Notification',
@@ -59,7 +68,7 @@ class MailModule extends BaseModule {
         attachments: filesArray.map((f) => (typeof f === 'string' ? { path: f } : f)),
       });
 
-      const dryRun = !config.smtp.host;
+      const dryRun = !smtp.host;
       logger.debug(`MailModule${dryRun ? '(dry-run)' : ''}: sent to=${to.join(',')} id=${info.messageId || 'n/a'}`);
       return this.ok({ dryRun });
     } catch (err) {

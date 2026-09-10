@@ -12,6 +12,8 @@ const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].map((m) => ({ lab
 
 const emptyEndpoint = { url: '', method: 'GET', headers: {} };
 
+const emptySmtp = { host: '', port: null, secure: false, user: '', rejectUnauthorized: true };
+
 const blank = {
   name: '',
   noReplyEmail: '',
@@ -19,6 +21,7 @@ const blank = {
   whatsappSenderPhone: '',
   smsSenderId: '',
   firebaseKey: '',
+  smtp: { ...emptySmtp },
   withoutNotificationBody: false,
   communicationFetchApi: { ...emptyEndpoint },
   communicationUpdateApi: { ...emptyEndpoint, method: 'POST' },
@@ -48,13 +51,15 @@ export default function CustomerConfigForm({ initial, onSubmit, submitting, onCa
   const [fetchHeaders, setFetchHeaders] = useState('');
   const [updateHeaders, setUpdateHeaders] = useState('');
   const [firebaseKeyText, setFirebaseKeyText] = useState('');
+  const [smtpPassText, setSmtpPassText] = useState('');
 
   useEffect(() => {
     if (initial) {
       const merged = { ...blank, ...initial };
       merged.communicationFetchApi = { ...emptyEndpoint, ...(initial.communicationFetchApi || {}) };
       merged.communicationUpdateApi = { ...emptyEndpoint, method: 'POST', ...(initial.communicationUpdateApi || {}) };
-      // Existing customers don't return firebaseKey (only hasFirebaseKey), so leave blank
+      merged.smtp = { ...emptySmtp, ...(initial.smtp || {}) };
+      // Existing customers don't return firebaseKey/smtp.pass, so leave blanks
       merged.firebaseKey = '';
       setForm(merged);
       setFetchHeaders(headersToText(merged.communicationFetchApi.headers));
@@ -65,6 +70,8 @@ export default function CustomerConfigForm({ initial, onSubmit, submitting, onCa
   const set = (k, v) => setForm((s) => ({ ...s, [k]: v }));
   const setEndpoint = (key, field, value) =>
     setForm((s) => ({ ...s, [key]: { ...s[key], [field]: value } }));
+  const setSmtp = (field, value) =>
+    setForm((s) => ({ ...s, smtp: { ...s.smtp, [field]: value } }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,7 +79,13 @@ export default function CustomerConfigForm({ initial, onSubmit, submitting, onCa
       ...form,
       communicationFetchApi: { ...form.communicationFetchApi, headers: textToHeaders(fetchHeaders) },
       communicationUpdateApi: { ...form.communicationUpdateApi, headers: textToHeaders(updateHeaders) },
+      smtp: { ...form.smtp },
     };
+    if (smtpPassText.trim()) {
+      payload.smtp.pass = smtpPassText.trim();
+    } else {
+      delete payload.smtp.pass;
+    }
     if (firebaseKeyText.trim()) {
       try {
         payload.firebaseKey = JSON.parse(firebaseKeyText);
@@ -133,6 +146,37 @@ export default function CustomerConfigForm({ initial, onSubmit, submitting, onCa
               <small className="text-gray-500">
                 Applied when a communication does not set <code>without_notification_body</code> itself.
               </small>
+            </div>
+          </Field>
+        </div>
+      </Panel>
+
+      <Panel header="SMTP (overrides global .env config)">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Field label="Host" className="md:col-span-2">
+            <InputText value={form.smtp.host} onChange={(e) => setSmtp('host', e.target.value)} placeholder="smtp.example.com (leave blank to use global)" />
+          </Field>
+          <Field label="Port">
+            <InputNumber value={form.smtp.port} onValueChange={(e) => setSmtp('port', e.value)} placeholder="587" min={1} max={65535} useGrouping={false} />
+          </Field>
+          <Field label="Secure (TLS)">
+            <InputSwitch checked={!!form.smtp.secure} onChange={(e) => setSmtp('secure', e.value)} />
+          </Field>
+          <Field label="User" className="md:col-span-2">
+            <InputText value={form.smtp.user} onChange={(e) => setSmtp('user', e.target.value)} placeholder="user@example.com" />
+          </Field>
+          <Field label="Password" className="md:col-span-2">
+            <InputText
+              type="password"
+              value={smtpPassText}
+              onChange={(e) => setSmtpPassText(e.target.value)}
+              placeholder={initial?.smtp?.hasPass ? '••••••• (stored — paste to replace)' : 'Password'}
+            />
+          </Field>
+          <Field label="Reject unauthorized TLS" className="md:col-span-4">
+            <div className="flex items-center gap-3">
+              <InputSwitch checked={!!form.smtp.rejectUnauthorized} onChange={(e) => setSmtp('rejectUnauthorized', e.value)} />
+              <small className="text-gray-500">Disable if your SMTP server uses a self-signed certificate.</small>
             </div>
           </Field>
         </div>

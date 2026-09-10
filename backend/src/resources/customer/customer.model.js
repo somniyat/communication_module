@@ -11,6 +11,18 @@ const apiEndpointSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const smtpSchema = new mongoose.Schema(
+  {
+    host: { type: String, trim: true, default: '' },
+    port: { type: Number, default: null },
+    secure: { type: Boolean, default: false },
+    user: { type: String, trim: true, default: '' },
+    pass: { type: String, default: '' },
+    rejectUnauthorized: { type: Boolean, default: true },
+  },
+  { _id: false }
+);
+
 const customerSchema = new mongoose.Schema(
   {
     id: { type: String, required: true, unique: true, index: true, default: () => prefixedId('cus') },
@@ -18,6 +30,7 @@ const customerSchema = new mongoose.Schema(
     apiKey: { type: String, required: true, unique: true, index: true },
 
     firebaseKey: { type: mongoose.Schema.Types.Mixed, default: null },
+    smtp: { type: smtpSchema, default: () => ({}) },
     noReplyEmail: { type: String, trim: true, default: '' },
     defaultRecipientEmails: { type: [String], default: [] },
     whatsappSenderPhone: { type: String, trim: true, default: '' },
@@ -48,6 +61,9 @@ customerSchema.methods.toJSON = function toJSON() {
   delete obj._id;
   obj.hasFirebaseKey = !!obj.firebaseKey;
   delete obj.firebaseKey;
+  if (obj.smtp) {
+    obj.smtp = { host: obj.smtp.host, port: obj.smtp.port, secure: obj.smtp.secure, user: obj.smtp.user, rejectUnauthorized: obj.smtp.rejectUnauthorized, hasPass: !!obj.smtp.pass };
+  }
   return obj;
 };
 
